@@ -1,0 +1,243 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  @apply antialiased bg-gray-50 text-gray-800;
+}
+
+h1, h2, h3, h4, h5 {
+  @apply font-semibold text-gray-900;
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-gray-100 hover:bg-gray-200 text-gray-900 font-semibold py-2 px-4 rounded-lg transition-all duration-200 border border-gray-300;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 bg-white text-gray-900 placeholder-gray-500;
+  }
+
+  .card {
+    @apply bg-white rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent;
+  }
+}
+
+/* PDF Export Styles */
+@media print {
+  .resume-container {
+    font-family: "Calibri", "Arial", sans-serif;
+    line-height: 1.15;
+    font-size: 11pt;
+  }
+  
+  .section-break {
+    page-break-inside: avoid;
+    margin-bottom: 12pt;
+  }
+  
+  .no-break {
+    page-break-inside: avoid;
+  }
+
+  /* Ensure good contrast for printing */
+  .text-gray-800 {
+    color: #1f2937 !important;
+  }
+  
+  .text-gray-600 {
+    color: #4b5563 !important;
+  }
+  
+  .text-gray-500 {
+    color: #6b7280 !important;
+  }
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  @apply outline-2 outline-offset-2 outline-blue-500;
+}
+
+/* Animation for loading states */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Resume preview specific styles */
+.resume-preview {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.resume-preview h1 {
+  @apply text-2xl font-bold text-gray-900;
+}
+
+.resume-preview h2 {
+  @apply text-lg font-semibold text-gray-800 border-b border-gray-300 pb-1 mb-3;
+}
+
+.resume-preview p {
+  @apply text-gray-700 leading-relaxed;
+}
+
+/* Form validation styles */
+.input-field:invalid {
+  @apply border-red-300 focus:ring-red-500 focus:border-red-500;
+}
+
+.input-field:valid {
+  @apply border-green-300 focus:ring-green-500 focus:border-green-500;
+}
+
+/* Loading spinner */
+.spinner {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #3498db;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Template specific styles */
+.template-modern {
+  @apply bg-white text-gray-800 font-sans;
+}
+
+.template-creative {
+  @apply bg-gradient-to-br from-purple-50 to-pink-50 text-gray-800;
+}
+
+.template-minimal {
+  @apply bg-white text-gray-900 font-mono;
+}
+
+.template-academic {
+  @apply bg-white text-gray-800 font-serif;
+}
+
+/* Responsive design helpers */
+@media (max-width: 768px) {
+  .resume-preview {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
+
+@media (max-width: 480px) {
+  .resume-preview {
+    transform: scale(0.8);
+  }
+}
+
+/* Print styles for resume */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  
+  .resume-preview,
+  .resume-preview * {
+    visibility: visible;
+  }
+  
+  .resume-preview {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none;
+  }
+  
+  /* Ensure good print contrast */
+  .text-blue-600 {
+    color: #000080 !important;
+  }
+  
+  .bg-blue-100 {
+    background-color: #f0f0f0 !important;
+  }
+  
+  .text-blue-700 {
+    color: #000060 !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    @apply bg-gray-900 text-gray-100;
+  }
+}
+
+/* Custom transitions */
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 300ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 300ms ease-out;
+}
