@@ -1,14 +1,22 @@
 ﻿import { createClient } from '@supabase/supabase-js';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
+// Validate environment variables
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_SERVICE_KEY) {
-  console.warn('Supabase env variables missing. Make sure SUPABASE_URL and SUPABASE_SERVICE_KEY are in .env');
+  console.error("❌ Missing Supabase environment variables.");
+  throw new Error("Supabase credentials not found. Check Render Environment Variables.");
 }
 
-// Use service role for full backend privileges
+// Create client using service key (backend only)
 export const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY,
-  { auth: { persistSession: false } }
+  {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  }
 );
