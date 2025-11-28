@@ -1,29 +1,41 @@
 
-
-import { supabase } from "../supabaseClient"
-import { useEffect, useState } from "react"
-import { Navigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
+import { auth } from "../firebase/config";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function ProtectedRoute({ children }) {
-  const [session, setSession] = useState(null)
-  const [loading, setLoading] = useState(true)
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session)
-      setLoading(false)
-    })
+    // Listen to Firebase auth state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-      setLoading(false)
-    })
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
-    return () => listener.subscription.unsubscribe()
-  }, [])
+  // Show loading state while checking auth
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-  if (loading) return null
-  if (!session) return <Navigate to="/login" replace />
+  // Redirect to login if not authenticated
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return children
+  // User is authenticated, render the protected content
+  return children;
 }

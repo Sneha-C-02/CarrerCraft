@@ -29,8 +29,8 @@ export default function Signup() {
         displayName: form.name,
       });
 
-      // Account created successfully → redirect
-      navigate("/login");
+      // Account created successfully → redirect to dashboard
+      navigate("/dashboard");
 
     } catch (err) {
       console.error(err);
