@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "eslint src --ext .js,.jsx",
     "format": "prettier --write \"src/**/*.{js,jsx,json,css,md}\"",
-    "test": "vitest"
+    "test": "vitest",
+    "start": "node server.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.86.0",
